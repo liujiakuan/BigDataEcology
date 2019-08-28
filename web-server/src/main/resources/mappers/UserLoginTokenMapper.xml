@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.webserver.dao.UserLoginTokenMapper">
+
+    <!--查询token-->
+    <select id="findTokenByUserId" parameterType="int" resultType="com.webserver.pojo.UserLoginToken">
+        SELECT
+        *
+        FROM viveuser_token
+        WHERE
+        viveuserid = #{viveuserid}
+    </select>
+
+    <!--添加token-->
+    <insert id="addToken" parameterType="com.webserver.pojo.UserLoginToken">
+        INSERT INTO viveuser_token(
+        token,
+        buildtime,
+        viveuserid)
+        VALUES(
+        #{token},
+        #{buildtime},
+        #{viveuserid})
+    </insert>
+
+    <!--更新token-->
+    <update id="updataToken" parameterType="com.webserver.pojo.UserLoginToken">
+        UPDATE viveuser_token
+        <trim prefix="set" suffixOverrides=",">
+            <if test="token!=null">token=#{token},</if>
+            <if test="buildtime!=null">buildtime=#{buildtime},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

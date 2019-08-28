@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.webserver.dao.ViveUserMapper">
+
+    <select id="getUsers" resultType="com.webserver.pojo.ViveUser">
+        SELECT
+        id,
+        name,
+        loginid,
+        password,
+        pwddefaulterrornum,
+        pwdlastmodifytime,
+        islock,
+        effective,
+        schoolid
+        FROM viveuser
+    </select>
+
+    <delete id="deleteUser" parameterType="string">
+        DELETE FROM viveuser WHERE loginid =#{loginId}
+    </delete>
+
+    <insert id="addUser" parameterType="com.webserver.pojo.ViveUser">
+        INSERT INTO viveuser(
+        id,
+        name,
+        password,
+        pwddefaulterrornum,
+        pwdlastmodifytime,
+        islock,
+        effective,
+        passwordsalt)
+        VALUES(
+        #{id},
+        #{name},
+        #{password},
+        #{pwddefaulterrornum},
+        #{pwdlastmodifytime},
+        #{islock},
+        #{effective},
+        #{passwordsalt})
+    </insert>
+
+    <select id="querySingle" parameterType="string" resultType="com.webserver.pojo.ViveUser">
+        SELECT
+        *
+        FROM
+        viveuser
+        WHERE
+        name = #{name}
+    </select>
+
+    <update id="updateUser" parameterType="com.webserver.pojo.ViveUser">
+        UPDATE viveuser
+        SET name = #{name}
+        WHERE loginid = #{loginid}
+    </update>
+
+    <update id="updatePassword" parameterType="com.webserver.pojo.ViveUser">
+        UPDATE viveuser
+        SET password = #{password}
+        WHERE loginid = #{loginid}
+    </update>
+
+    <update id="updateUserErrorCount" parameterType="com.webserver.pojo.ViveUser">
+        UPDATE viveuser
+        SET pwddefaulterrornum = #{pwddefaulterrornum}
+        WHERE loginid = #{loginid}
+    </update>
+
+    <!--通过token获取user id-->
+    <select id="getUserIdByToken" parameterType="String" resultType="int">
+        SELECT viveuserid FROM viveuser_token WHERE token = #{token}
+    </select>
+
+    <!--通过user id 获取学校 id-->
+    <select id="getSchoolByUserId" parameterType="int" resultType="int">
+        SELECT schoolid FROM viveuser WHERE id = #{id}
+    </select>
+</mapper>
