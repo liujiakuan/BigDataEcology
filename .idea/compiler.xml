@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="data-server" />
+        <module name="knowledge" />
         <module name="web-server" />
       </profile>
     </annotationProcessing>
@@ -30,6 +31,7 @@
       <module name="eureka-server" options="-parameters" />
       <module name="feign-server" options="-parameters" />
       <module name="hystrix-server" options="-parameters" />
+      <module name="knowledge" options="-parameters" />
       <module name="ribbon-server" options="-parameters" />
       <module name="web-server" options="-parameters" />
       <module name="zipkin-server" options="-parameters" />
