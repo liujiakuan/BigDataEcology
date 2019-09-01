@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <meta name="keywords" content="VR,5G,Education,VR Education,5G VR">
+    <meta name="description" content="5G VR Education">
+    <meta name="author" content="LiuJack">
+    <meta name="soft" content="jetbrains-idea">
+    <meta name="copyRight" content="Mr. Liu is copyright holder, refuse piracy, piracy must be investigated">
+
+    <title>Streaming Map</title>
+
+    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap.css.map">
+    <link rel="stylesheet" href="../common/bootstrap/css/bootstrap-theme.css.map">
+    <link rel="stylesheet" href="../css/index.css">
+
+    <script type="text/javascript" src="../common/jquery/jquery.js"></script>
+    <script type="text/javascript" src="../common/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../common/bootstrap/js/npm.js"></script>
+    <script type="text/javascript" src="../common/echarts/echarts.js"></script>
+    <script type="text/javascript" src="../common/echarts/bmap.js"></script>
+    <script type="text/javascript" src="../common/echarts/china.js"></script>
+</head>
+<body>
+<div id="body">
+    <!--Header-->
+    <div class="container-fluid">
+        <div class="row">
+            <header>
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                    <div class="container-fluid backgroundNav">
+                        <div class="navbar-header">
+                            <div class="navbarMarginLeft"><a href="" class="navbar-brand">Project Github Address</a>
+                            </div>
+                        </div>
+                        <div class="displayNone">
+                            <ul class="nav navbar-nav navbar-right navbarMarginRight">
+                                <li><a href="#" data-toggle="modal" data-target="#Support">Support</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="modal fade" id="Support" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Support</h4>
+                        </div>
+                        <div class="modal-body">
+                            Support Img
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success">Support</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Quit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Content-->
+    <div id="content" class="container-fluid">
+        <div class="row">
+            <!--map-->
+            <div id="contentMap" style="height:800px;"
+                 class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">
+            </div>
+            <script type="text/javascript" src="../js/index.js" charset="UTF-8"></script>
+        </div>
+    </div>
+</div>
+</body>
+</html>
