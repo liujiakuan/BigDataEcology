@@ -1,0 +1,23 @@
+**checkpoint****是什么：**
+
+（1）Spark 在生产环境下经常会面临transformation的RDD非常多（例如一个Job中包含1万个RDD）或者具体transformation的RDD本身计算特别复杂或者耗时（例如计算时长超过1个小时），这个时候就要考虑对计算结果数据的持久化；
+
+（2）Spark是擅长多步骤迭代的，同时擅长基于Job的复用，这个时候如果能够对曾经计算的过程产生的数据进行复用，就可以极大的提升效率；
+
+（3）如果采用persist把数据放在内存中，虽然是快速的，但是也是最不可靠的；如果把数据放在磁盘上，也不是完全可靠的！**例如磁盘会损坏，系统管理员可能清空磁盘**。
+
+（4）Checkpoint的产生就是为了相对而言更加可靠的持久化数据，在Checkpoint的时候可以指定把数据放在本地，并且是多副本的方式，但是在生产环境下是放在HDFS上，这就天然的借助了HDFS高容错、高可靠的特征来完成了最大化的可靠的持久化数据的方式；
+
+（5）Checkpoint是为了最大程度保证绝对可靠的复用RDD计算数据的Spark高级功能，通过checkpoint我们通常把数据持久化到HDFS来保证数据最大程度的安全性；
+
+（6）Checkpoint就是针对整个RDD计算链条中特别需要数据持久化的环节（后面会反复使用当前环节的RDD）开始基于HDFS等的数据持久化复用策略，通过对RDD启动checkpoint机制来实现容错和高可用；由此当加入进行一个1万个步骤，在9000个步骤的时候persist，数据还是有可能丢失的，但是如果checkpoint，数据丢失的概率几乎为0。
+
+**checkpoint****原理机制：**
+
+ 
+
+（1）当RDD使用cache机制从内存中读取数据，如果数据没有读到，会使用checkpoint机制读取数据。此时如果没有checkpoint机制，那么就需要找到父RDD重新计算数据了，因此checkpoint是个很重要的容错机制。checkpoint就是对于一个RDD chain（链），如果中间某些中间结果RDD，后面需要反复使用该数据，可能因为一些故障导致该中间数据丢失，那么就可以针对该RDD启动checkpoint机制，checkpoint，首先需要调用sparkContext的setCheckpoint方法，设置一个容错文件系统目录，比如hdfs，然后对RDD调用checkpoint方法。之后再RDD所处的job运行结束后，会启动一个单独的job，来将checkpoint过的数据写入之前设置的文件系统持久化，进行高可用。所以后面的计算在使用该RDD时，如果数据丢失了，但是还是可以从它的checkpoint中读取数据，不需要重新计算。
+
+ 
+
+（2）persist或者cache与checkpoint的区别在于,前者持久化只是将数据保存在BlockManager中但是其lineage是不变的，但是后者checkpoint执行完后，rdd已经没有依赖RDD，只有一个checkpointRDD，checkpoint之后，RDD的lineage就改变了。而且，持久化的数据丢失的可能性更大，因为可能磁盘或内存被清理，但是checkpoint的数据通常保存到hdfs上，放在了高容错文件系统。
